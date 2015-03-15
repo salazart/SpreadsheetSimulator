@@ -1,0 +1,8 @@
+.classpath
+.project
+
+# Work directory #
+/bin/
+/.gradle/
+/.settings/
+

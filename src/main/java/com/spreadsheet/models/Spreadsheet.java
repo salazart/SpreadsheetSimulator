@@ -40,6 +40,12 @@ public class Spreadsheet{
 		rows.add(row);
 	}
 	
+	public void addNewRow(List<String> row){
+		SpreadsheetsRow spreadsheetsRow = new SpreadsheetsRow();
+		spreadsheetsRow.setCell(row);
+		rows.add(spreadsheetsRow);
+	}
+	
 	public String getValue(int indexRow, int indexCell){
 		if(indexRow < getCountRows()){
 			if(indexCell < getCountCells(indexRow)){
