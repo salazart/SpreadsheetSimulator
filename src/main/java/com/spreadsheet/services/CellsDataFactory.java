@@ -17,7 +17,7 @@ public class CellsDataFactory {
 				return new ExtensionService().getOutCellsData(inCellsData);
 			default:
 				if(Character.isDigit(inCellsData.charAt(0))){
-					return new DigitalService().getOutCellsData(inCellsData);
+					return new NumericService().getOutCellsData(inCellsData);
 				} else {
 					return ERROR_CHARACTER + inCellsData;
 				}

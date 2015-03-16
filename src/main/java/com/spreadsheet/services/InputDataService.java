@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 import com.spreadsheet.models.Spreadsheet;
 
-public class ReadInputData {
+public class InputDataService {
 	private static final String SEPARATE_SYMBOL = "\t";
 	private Scanner scanner = new Scanner(System.in);
 	private int height;

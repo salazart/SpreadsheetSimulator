@@ -2,13 +2,13 @@ package com.spreadsheet;
  
 import com.spreadsheet.models.Spreadsheet;
 import com.spreadsheet.services.ProcessService;
-import com.spreadsheet.services.ReadInputData;
-import com.spreadsheet.services.WriteOutData;
+import com.spreadsheet.services.InputDataService;
+import com.spreadsheet.services.OutDataService;
 
 public class SpreadsheetSimulator {
 
 	public static void main(String[] args) {
-		ReadInputData readInputData = new ReadInputData();
+		InputDataService readInputData = new InputDataService();
 		Spreadsheet inSpreadsheet = readInputData.readInputData();
 			
 		ProcessService processService = new ProcessService(inSpreadsheet);
@@ -18,7 +18,7 @@ public class SpreadsheetSimulator {
 		//SpreadsheetService spreadsheetService = new SpreadsheetService();
 		//System.out.println(spreadsheetService.getSpreadsheetsValue(inSpreadsheet, adressValue));
 		
-		WriteOutData writeOutData = new WriteOutData();
+		OutDataService writeOutData = new OutDataService();
 		writeOutData.writeOutData(outSpreadsheet);
 		
 	}

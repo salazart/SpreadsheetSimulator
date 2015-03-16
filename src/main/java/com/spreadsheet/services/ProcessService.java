@@ -4,7 +4,7 @@ import com.spreadsheet.models.Spreadsheet;
 
 public class ProcessService {
 	private SpreadsheetService spreadsheetService = new SpreadsheetService();
-	private DigitalService digitalService = new DigitalService();
+	private NumericService digitalService = new NumericService();
 	private CalculationService calculationService = new CalculationService();
 	private Spreadsheet spreadsheet;
 	
@@ -30,12 +30,17 @@ public class ProcessService {
 	}
 	
 	private String processExtension(String inCellsData){
+		if(digitalService.isNumeric(inCellsData)){
+			return inCellsData;
+		} else {
 			String[] cellsElements = getValues(inCellsData);
 			String[] operations = getOperations(inCellsData);
 			
 			cellsElements = getValuesOfCells(cellsElements);
 			
 			return calculationService.calculateExtension(cellsElements, operations);
+		}
+		
 	}
 	
 	private String[] getValuesOfCells(String[] cellsElements){

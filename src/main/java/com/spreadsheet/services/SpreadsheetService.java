@@ -4,13 +4,11 @@ import com.spreadsheet.models.Spreadsheet;
 
 public class SpreadsheetService {
 	private static final int BYTE_CODE_A = 64;
-	private int indexRow;
-	private int indexColumn;
 	
 	public String getSpreadsheetsValue(Spreadsheet spreadsheet, String adressValue){
 		if(isSpreadsheetsAdress(adressValue)){
-			indexRow = getIndexRow(adressValue);
-			indexColumn = getIndexColumn(adressValue);
+			int indexRow = getIndexRow(adressValue);
+			int indexColumn = getIndexColumn(adressValue);
 			return spreadsheet.getValue(indexRow, indexColumn);
 		} else {
 			return new String();

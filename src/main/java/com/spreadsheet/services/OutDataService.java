@@ -2,7 +2,7 @@ package com.spreadsheet.services;
 
 import com.spreadsheet.models.Spreadsheet;
 
-public class WriteOutData {
+public class OutDataService {
 	
 	public void writeOutData(Spreadsheet spreadsheet){
 		for(int i = 0; i < spreadsheet.getCountRows(); i++){
