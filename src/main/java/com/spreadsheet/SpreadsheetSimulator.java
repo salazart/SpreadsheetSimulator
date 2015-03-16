@@ -1,21 +1,25 @@
 package com.spreadsheet;
-
+ 
 import com.spreadsheet.models.Spreadsheet;
+import com.spreadsheet.services.ProcessService;
 import com.spreadsheet.services.ReadInputData;
-import com.spreadsheet.services.SpreadsheetService;
+import com.spreadsheet.services.WriteOutData;
 
 public class SpreadsheetSimulator {
 
 	public static void main(String[] args) {
 		ReadInputData readInputData = new ReadInputData();
-		Spreadsheet spreadsheet = readInputData.readInputData();
+		Spreadsheet inSpreadsheet = readInputData.readInputData();
 			
-		String adressValue = "B1";
-		SpreadsheetService spreadsheetService = new SpreadsheetService();
-		System.out.println(spreadsheetService.getSpreadsheetsValue(spreadsheet, adressValue));
+		ProcessService processService = new ProcessService(inSpreadsheet);
+		Spreadsheet outSpreadsheet = processService.processSpreadsheet();
 		
-		//WriteOutData writeOutData = new WriteOutData();
-		//writeOutData.writeOutData(spreadsheet);
+		//String adressValue = "C3";
+		//SpreadsheetService spreadsheetService = new SpreadsheetService();
+		//System.out.println(spreadsheetService.getSpreadsheetsValue(inSpreadsheet, adressValue));
+		
+		WriteOutData writeOutData = new WriteOutData();
+		writeOutData.writeOutData(outSpreadsheet);
 		
 	}
 

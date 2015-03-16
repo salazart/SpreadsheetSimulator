@@ -55,6 +55,14 @@ public class Spreadsheet{
 		return new String();
 	}
 	
+	public void setValue(String value, int indexRow, int indexCell){
+		if(indexRow < getCountRows()){
+			if(indexCell < getCountCells(indexRow)){
+				rows.get(indexRow).getCells().set(indexCell, value);
+			}
+		}
+	}
+	
 	public void addNewCell(String valueCell){
 		int currentIndex = rows.size();
 		if(currentIndex == 0){

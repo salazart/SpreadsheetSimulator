@@ -8,9 +8,13 @@ public class SpreadsheetService {
 	private int indexColumn;
 	
 	public String getSpreadsheetsValue(Spreadsheet spreadsheet, String adressValue){
-		indexRow = getIndexRow(adressValue);
-		indexColumn = getIndexColumn(adressValue);
-		return spreadsheet.getValue(indexRow, indexColumn);
+		if(isSpreadsheetsAdress(adressValue)){
+			indexRow = getIndexRow(adressValue);
+			indexColumn = getIndexColumn(adressValue);
+			return spreadsheet.getValue(indexRow, indexColumn);
+		} else {
+			return new String();
+		}
 	}
 	
 	private int getIndexRow(String adressValue){
@@ -41,5 +45,23 @@ public class SpreadsheetService {
 			}
 		}
 		return indexColumn-1;
+	}
+	
+	public boolean isSpreadsheetsAdress(String adressValue){
+		boolean flagText = false;
+		boolean flagDigital = false;
+		for(int i = 0; i < adressValue.length(); i++){
+			char charSymbol = adressValue.charAt(i);
+			if(charSymbol >= 'A' && charSymbol <='Z' && flagDigital == false){
+				flagText = true;
+				continue;
+			} else if(charSymbol >= '0' && charSymbol <= '9' && flagText == true){
+				flagDigital = true;
+				continue;
+			} else {
+				return false;
+			}
+		}
+		return true;
 	}
 }
