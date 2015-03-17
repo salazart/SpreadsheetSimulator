@@ -5,6 +5,7 @@ public class CellsDataFactory {
 	private static final String EQUAL_CHARACTER = "=";
 	private static final String ERROR_CHARACTER = "#";
 	
+	
 	public String getOutCellsData(String inCellsData){
 		
 		if(inCellsData.isEmpty()){
@@ -15,12 +16,10 @@ public class CellsDataFactory {
 				return new TextValueService().getOutCellsData(inCellsData);
 			case EQUAL_CHARACTER:
 				return new ExtensionService().getOutCellsData(inCellsData);
+			case ERROR_CHARACTER:
+				return inCellsData;
 			default:
-				if(Character.isDigit(inCellsData.charAt(0))){
-					return new NumericService().getOutCellsData(inCellsData);
-				} else {
-					return ERROR_CHARACTER + inCellsData;
-				}
+				return new NumericService().getOutCellsData(inCellsData);
 			}
 		}
 	}

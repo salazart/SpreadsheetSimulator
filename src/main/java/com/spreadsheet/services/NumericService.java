@@ -14,10 +14,10 @@ public class NumericService implements CellsData{
 	}
 	
 	public boolean isNumeric(String inCellsData){
-		if(inCellsData.matches("-?\\d+(\\.\\d+)?")){
-			return true;
-		} else {
+		if(inCellsData.isEmpty() || !inCellsData.matches("-?\\d+(\\.\\d+)?")){
 			return false;
+		} else {
+			return true;
 		}
 	}
 }

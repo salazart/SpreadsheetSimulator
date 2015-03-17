@@ -3,8 +3,10 @@ package com.spreadsheet.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.spreadsheet.services.SpreadsheetService;
 
-public class Spreadsheet{
+
+public class Spreadsheet extends SpreadsheetService{
 	private List<SpreadsheetsRow> rows = new ArrayList<SpreadsheetsRow>();
 
 	public List<String> getCells(int indexRow){
@@ -47,6 +49,16 @@ public class Spreadsheet{
 		if(indexRow < getCountRows()){
 			if(indexCell < getCountCells(indexRow)){
 				rows.get(indexRow).getCells().set(indexCell, value);
+			}
+		}
+	}
+	
+	public void setValue(String value, String adressValue){
+		int indexRow = getIndexRow(adressValue);
+		int indexColumn = getIndexColumn(adressValue);
+		if(indexRow < getCountRows()){
+			if(indexColumn < getCountCells(indexRow)){
+				rows.get(indexRow).getCells().set(indexColumn, value);
 			}
 		}
 	}

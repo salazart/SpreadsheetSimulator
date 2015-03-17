@@ -15,7 +15,7 @@ public class SpreadsheetService {
 		}
 	}
 	
-	private int getIndexRow(String adressValue){
+	protected int getIndexRow(String adressValue){
 		String indexRowText = adressValue.replaceAll("[^0-9]+","");
 		if(!indexRowText.isEmpty()){
 			return Integer.valueOf(indexRowText)-1;
@@ -24,7 +24,7 @@ public class SpreadsheetService {
 		}
 	}
 	
-	private int getIndexColumn(String adressValue){
+	protected int getIndexColumn(String adressValue){
 		String indexColumnText = adressValue.replaceAll("[^A-Z]+","");
 		int indexColumn = 0;
 		if(indexColumnText.isEmpty()){

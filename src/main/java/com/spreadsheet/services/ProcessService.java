@@ -4,7 +4,7 @@ import com.spreadsheet.models.Spreadsheet;
 
 public class ProcessService {
 	private SpreadsheetService spreadsheetService = new SpreadsheetService();
-	private NumericService digitalService = new NumericService();
+	private NumericService numericService = new NumericService();
 	private CalculationService calculationService = new CalculationService();
 	private Spreadsheet spreadsheet;
 	
@@ -17,61 +17,67 @@ public class ProcessService {
 		for(int i = 0; i < spreadsheet.getCountRows(); i++){
 			for(int j = 0; j < spreadsheet.getCountCells(i); j++){
 				CellsDataFactory cellsDataFactory = new CellsDataFactory();
-				String outCellsData = cellsDataFactory.getOutCellsData(spreadsheet.getValue(i, j));
+				String dataOfCell = cellsDataFactory.getOutCellsData(spreadsheet.getValue(i, j));
 				
-				if(isExtension(outCellsData)){
-					outCellsData = processExtension(outCellsData);
+				if(isExtension(dataOfCell)){
+					dataOfCell = processExtension(dataOfCell);
 				}
 				
-				spreadsheet.setValue(outCellsData, i, j);
+				spreadsheet.setValue(dataOfCell, i, j);
 			}
 		}
 		return spreadsheet;
 	}
 	
 	private String processExtension(String inCellsData){
-		if(digitalService.isNumeric(inCellsData)){
+		if(numericService.isNumeric(inCellsData)){
 			return inCellsData;
-		} else {
+		} else if (isExtension(inCellsData)){
 			String[] cellsElements = getValues(inCellsData);
 			String[] operations = getOperations(inCellsData);
 			
-			cellsElements = getValuesOfCells(cellsElements);
+			String[] cellsNumbers = getValuesOfCells(cellsElements);
 			
-			return calculationService.calculateExtension(cellsElements, operations);
+			return calculationService.calculateExtension(cellsNumbers, operations, inCellsData);
+			
+		} else {
+			return "#" + inCellsData;
 		}
 		
 	}
 	
 	private String[] getValuesOfCells(String[] cellsElements){
 		for(int i = 0; i < cellsElements.length; i++){
-			if(spreadsheetService.isSpreadsheetsAdress(cellsElements[i])){
+			if (numericService.isNumeric(cellsElements[i])){
+				continue;
+			} else if(spreadsheetService.isSpreadsheetsAdress(cellsElements[i])){
 				String value = spreadsheetService.getSpreadsheetsValue(spreadsheet, cellsElements[i]);
 				cellsElements[i] = processExtension(value);
+				
 			} else {
-				continue;
+				return new String[0];
 			}
 		}
 		return cellsElements;
 	}
 	
-	private boolean isExtension(String outCellsData){
+	private boolean isExtension(String dataOfCell){
 		String EQUAL_CHARACTER = "=";
-		if(outCellsData.substring(0, 1).equals(EQUAL_CHARACTER)){
-			return true;
-		} else {
+		if(dataOfCell.isEmpty() || !dataOfCell.substring(0, 1).equals(EQUAL_CHARACTER)){
 			return false;
+		} else {
+			return true;
 		}
 	}
 	
 	private String[] getValues(String inCellsData){
-		String lineValues = inCellsData.replaceAll("[^0-9,^A-Z]+"," ");
+		String lineValues = inCellsData.replaceAll("[-,+,*,/,=]+"," ");
 		lineValues = lineValues.trim();
 		return lineValues.split(" ");
 	}
 	
 	private String[] getOperations(String inCellsData){
-		String lineOperations = inCellsData.replaceAll("[^-,^+,^*,^/]+"," ");
+		String lineOperations = inCellsData.replaceAll("[A-Z,0-9]+"," ");
 		lineOperations = lineOperations.trim();
 		return lineOperations.split(" ");
 	}
