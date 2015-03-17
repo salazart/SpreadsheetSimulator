@@ -13,7 +13,7 @@ public class CalculationService{
 				if(numericService.isNumeric(cellsNumbers[i])){
 					factoryOperation(cellsNumbers[i], operations[i]);
 				} else {
-					return "#" + originDataCells;//new String();
+					return "#" + originDataCells;
 				}
 			}
 		}

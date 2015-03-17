@@ -4,6 +4,7 @@ import com.spreadsheet.models.Spreadsheet;
 
 public class ProcessService {
 	private SpreadsheetService spreadsheetService = new SpreadsheetService();
+	private ExtensionService extensionService = new ExtensionService();
 	private NumericService numericService = new NumericService();
 	private CalculationService calculationService = new CalculationService();
 	private Spreadsheet spreadsheet;
@@ -19,7 +20,7 @@ public class ProcessService {
 				CellsDataFactory cellsDataFactory = new CellsDataFactory();
 				String dataOfCell = cellsDataFactory.getOutCellsData(spreadsheet.getValue(i, j));
 				
-				if(isExtension(dataOfCell)){
+				if(extensionService.isExtension(dataOfCell)){
 					dataOfCell = processExtension(dataOfCell);
 				}
 				
@@ -29,19 +30,19 @@ public class ProcessService {
 		return spreadsheet;
 	}
 	
-	private String processExtension(String inCellsData){
-		if(numericService.isNumeric(inCellsData)){
-			return inCellsData;
-		} else if (isExtension(inCellsData)){
-			String[] cellsElements = getValues(inCellsData);
-			String[] operations = getOperations(inCellsData);
+	private String processExtension(String dataOfCell){
+		if(numericService.isNumeric(dataOfCell)){
+			return dataOfCell;
+		} else if (extensionService.isExtension(dataOfCell)){
+			String[] cellsElements = extensionService.getValues(dataOfCell);
+			String[] operations = extensionService.getOperations(dataOfCell);
 			
 			String[] cellsNumbers = getValuesOfCells(cellsElements);
 			
-			return calculationService.calculateExtension(cellsNumbers, operations, inCellsData);
+			return calculationService.calculateExtension(cellsNumbers, operations, dataOfCell);
 			
 		} else {
-			return "#" + inCellsData;
+			return "#" + dataOfCell;
 		}
 		
 	}
@@ -59,26 +60,5 @@ public class ProcessService {
 			}
 		}
 		return cellsElements;
-	}
-	
-	private boolean isExtension(String dataOfCell){
-		String EQUAL_CHARACTER = "=";
-		if(dataOfCell.isEmpty() || !dataOfCell.substring(0, 1).equals(EQUAL_CHARACTER)){
-			return false;
-		} else {
-			return true;
-		}
-	}
-	
-	private String[] getValues(String inCellsData){
-		String lineValues = inCellsData.replaceAll("[-,+,*,/,=]+"," ");
-		lineValues = lineValues.trim();
-		return lineValues.split(" ");
-	}
-	
-	private String[] getOperations(String inCellsData){
-		String lineOperations = inCellsData.replaceAll("[A-Z,0-9]+"," ");
-		lineOperations = lineOperations.trim();
-		return lineOperations.split(" ");
 	}
 }

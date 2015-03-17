@@ -14,10 +14,6 @@ public class SpreadsheetSimulator {
 		ProcessService processService = new ProcessService(inSpreadsheet);
 		Spreadsheet outSpreadsheet = processService.processSpreadsheet();
 		
-		//String adressValue = "C3";
-		//SpreadsheetService spreadsheetService = new SpreadsheetService();
-		//System.out.println(spreadsheetService.getSpreadsheetsValue(inSpreadsheet, adressValue));
-		
 		OutDataService writeOutData = new OutDataService();
 		writeOutData.writeOutData(outSpreadsheet);
 		
