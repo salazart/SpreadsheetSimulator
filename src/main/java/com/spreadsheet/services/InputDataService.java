@@ -1,61 +1,39 @@
 package com.spreadsheet.services;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
-import com.spreadsheet.models.Spreadsheet;
-
+/**
+ * The class read input data in the form:
+ * first line contains values of the count rows and columns data
+ * second lines contains a data values separated tabulate symbol 
+ * @author home
+ *
+ */
 public class InputDataService {
-	private static final String SEPARATE_SYMBOL = "\t";
 	private Scanner scanner = new Scanner(System.in);
-	private int height;
-	private int lenght;
+	private int heightData;
+	private int lenghtData;
 	
-	public Spreadsheet readInputData(){
+	public String[][] readInputData(){
+		heightData = scanner.nextInt();
+		lenghtData = scanner.nextInt();
+
+		String[][] inputData = new String[heightData][lenghtData];
 		
-		Spreadsheet spreadsheet = new Spreadsheet();
-		if(!sizeSpeadsheet()){
-			return spreadsheet;
-		} else {
-			for(int i = 0; i < height; i++){
-				spreadsheet.addNewRow(getInputElements());
+		for(int i = 0; i < heightData; i++){
+			for(int j = 0; j < lenghtData; j++){
+				inputData[i][j] = scanner.next();
 			}
 		}
-		return spreadsheet;
-	}
-	
-	private boolean sizeSpeadsheet(){
-		List<String> inputElements = getInputElements();
-		if(inputElements.size() > 1){
-			try{
-				height = Integer.valueOf(inputElements.get(0));
-				lenght = Integer.valueOf(inputElements.get(1));
-				return true;
-			} catch (Exception e){
-				return false;
-			}
-		}
-		return false;
-	}
-	
-	private List<String> getInputElements(){
-		if(scanner.hasNextLine()){
-			String inputData = scanner.nextLine();
-			String[] inputElements = inputData.split(SEPARATE_SYMBOL);
-			return Arrays.asList(inputElements);
-		} else {
-			return new ArrayList<String>();
-		}
-	}
-	
-	public int getHeight() {
-		return height;
+		scanner.close();
+		return inputData;
 	}
 
-	public int getLenght() {
-		return lenght;
+	public int getHeightData() {
+		return heightData;
 	}
 
+	public int getLenghtData() {
+		return lenghtData;
+	}
 }

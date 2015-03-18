@@ -2,18 +2,19 @@ package com.spreadsheet.services;
 
 
 public class CalculationService{
+	private static final String ERROR_CHARACTER = "#";
 	private NumericService numericService = new NumericService();
 	private int firstValue;
 	
-	public String calculateExtension(String[] cellsNumbers, String[] operations, String originDataCells) {
+	public String calculateExtension(String[] cellsNumbers, String[] operations, String originData) {
 		if(cellsNumbers.length == 0){
-			return "#" + originDataCells;
+			return ERROR_CHARACTER + originData;
 		} else {
 			for(int i = 0; i < cellsNumbers.length; i++){
 				if(numericService.isNumeric(cellsNumbers[i])){
 					factoryOperation(cellsNumbers[i], operations[i]);
 				} else {
-					return "#" + originDataCells;
+					return ERROR_CHARACTER + originData;
 				}
 			}
 		}

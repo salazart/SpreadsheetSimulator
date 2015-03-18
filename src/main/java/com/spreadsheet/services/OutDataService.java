@@ -1,15 +1,20 @@
 package com.spreadsheet.services;
 
-import com.spreadsheet.models.Spreadsheet;
+/**
+ * The class write out data in the form table data values separated tabulate symbol 
+ * @author home
+ *
+ */
 
 public class OutDataService {
+	private static final String DELIMITER_SYMBOL = "\t";
 	
-	public void writeOutData(Spreadsheet spreadsheet){
-		for(int i = 0; i < spreadsheet.getCountRows(); i++){
-			for(int j = 0; j < spreadsheet.getCountCells(i)-1; j++){
-				System.out.print(spreadsheet.getValue(i, j) + "\t");
+	public void writeOutData(String[][] outData, int heightData, int lenghtData){
+		for(int i = 0; i < heightData; i++){
+			for(int j = 0; j < lenghtData-1; j++){
+				System.out.print(outData[i][j] + DELIMITER_SYMBOL);
 			}
-			System.out.println(spreadsheet.getValue(i, spreadsheet.getCountCells(i)-1));
+			System.out.println(outData[i][lenghtData-1]);
 		}
 	}
 	
