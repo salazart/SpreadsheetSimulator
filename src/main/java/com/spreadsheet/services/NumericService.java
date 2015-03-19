@@ -19,9 +19,17 @@ public class NumericService implements DataType{
 		if(isNumeric(spreadsheetData[indexheight][indexLenght])){
 			return spreadsheetData;
 		} else {
-			spreadsheetData[indexheight][indexLenght] = ERROR_CHARACTER + spreadsheetData[indexheight][indexLenght];
+			spreadsheetData[indexheight][indexLenght] = errorExtension(spreadsheetData[indexheight][indexLenght]);
 			return spreadsheetData;
 		}
 		
+	}
+	
+	public String errorExtension(String originValue){
+		if(originValue.startsWith(ERROR_CHARACTER)){
+			return originValue;
+		} else {
+			return ERROR_CHARACTER + originValue;
+		}
 	}
 }

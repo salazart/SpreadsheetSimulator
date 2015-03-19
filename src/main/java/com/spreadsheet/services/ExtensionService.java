@@ -8,7 +8,6 @@ import com.spreadsheet.interfaces.DataType;
  */
 public class ExtensionService implements DataType{
 	private static final String EXTENSION_CHARACTER = "=";
-	private static final String ERROR_CHARACTER = "#";
 	
 	private NumericService numericService = new NumericService();
 	private CalculationService calculationService = new CalculationService();
@@ -31,22 +30,22 @@ public class ExtensionService implements DataType{
 	
 	/**
 	 * Processing extension
-	 * @param dataOfCell
+	 * @param dataValue
 	 * @return
 	 */
-	private String processExtension(String dataOfCell){
-		if(numericService.isNumeric(dataOfCell)){
-			return dataOfCell;
-		} else if (isExtension(dataOfCell)){
-			String[] cellsElements = getValues(dataOfCell);
-			String[] operations = getOperations(dataOfCell);
+	private String processExtension(String dataValue){
+		if(numericService.isNumeric(dataValue)){
+			return dataValue;
+		} else if (isExtension(dataValue)){
+			String[] cellsElements = calculationService.getValues(dataValue);
+			String[] operations = calculationService.getOperations(dataValue);
 			
 			String[] cellsNumbers = processExtensionAdress(cellsElements);
 			
-			return calculationService.calculateExtension(cellsNumbers, operations, dataOfCell);
+			return calculationService.calculateExtension(cellsNumbers, operations, dataValue);
 			
 		} else {
-			return ERROR_CHARACTER + dataOfCell;
+			return numericService.errorExtension(dataValue);
 		}
 		
 	}
@@ -68,9 +67,7 @@ public class ExtensionService implements DataType{
 					return cellsElements;
 				
 				//Recursion 
-				String processedValue = processExtension(spreadsheet[indexHeight][indexLenght]);
-				cellsElements[i] = processedValue;
-				spreadsheet[indexHeight][indexLenght] = processedValue;
+				cellsElements[i] = processExtension(spreadsheet[indexHeight][indexLenght]);
 			}
 		}
 		return cellsElements;
@@ -83,32 +80,12 @@ public class ExtensionService implements DataType{
 	 * @return
 	 */
 	public boolean isExtension(String extension){
-		if(extension.isEmpty() || !extension.substring(0, 1).equals(EXTENSION_CHARACTER)){
+		if(extension.isEmpty() || !extension.startsWith(EXTENSION_CHARACTER)){
 			return false;
 		} else {
 			return true;
 		}
 	}
 	
-	/**
-	 *	Returning all values from extension for calculate result
-	 * @param extension
-	 * @return
-	 */
-	public String[] getValues(String extension){
-		String lineValues = extension.replaceAll("[-,+,*,/,=]+"," ");
-		lineValues = lineValues.trim();
-		return lineValues.split(" ");
-	}
-	
-	/**
-	 *	Returning all operations from extension 
-	 * @param extension
-	 * @return
-	 */
-	public String[] getOperations(String extension){
-		String lineOperations = extension.replaceAll("[A-Z,0-9]+"," ");
-		lineOperations = lineOperations.trim();
-		return lineOperations.split(" ");
-	}
+
 }
