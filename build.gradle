@@ -1,5 +1,9 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'application'
+
+mainClassName = 'com.spreadsheet.SpreadsheetSimulator'
+
 
 sourceSets {
 	main.java.srcDir "src/main/java"

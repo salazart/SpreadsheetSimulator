@@ -2,6 +2,11 @@ package com.spreadsheet.services;
 
 import com.spreadsheet.interfaces.DataType;
 
+/**
+ * Class check numeric value and if false returning error extension  
+ * @author home
+ *
+ */
 public class NumericService implements DataType{
 	private static final String ERROR_CHARACTER = "#";
 
@@ -25,6 +30,11 @@ public class NumericService implements DataType{
 		
 	}
 	
+	/**
+	 * returning error extension
+	 * @param originValue
+	 * @return
+	 */
 	public String errorExtension(String originValue){
 		if(originValue.startsWith(ERROR_CHARACTER)){
 			return originValue;

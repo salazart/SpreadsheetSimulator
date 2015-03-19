@@ -6,15 +6,24 @@ public class DataFactory {
 	private static final String ERROR_CHARACTER = "#";
 	private static final String EMPTY_CHARACTER = "";
 	
-	public String[][] processFactory(String[][] spreadsheet, int heightData, int lenghtData){
-		for(int i = 0; i < heightData; i++){
-			for(int j = 0; j < lenghtData; j++){
+	public String[][] processFactory(String[][] spreadsheet, 
+			int startHeightData, int finishHeightData, int startLenghtData, int finishLenghtData){
+		
+		for(int i = startHeightData; i < finishHeightData; i++){
+			for(int j = startLenghtData; j < finishLenghtData; j++){
 				spreadsheet = selectFactory(spreadsheet, i, j);
 			}
 		}
 		return spreadsheet;
 	}
 	
+	/**
+	 * This method selected type data from spreadsheet and run corresponding class for processing it
+	 * @param spreadsheet - table input data
+	 * @param indexheight - index cells value
+	 * @param indexLenght - index cells value
+	 * @return
+	 */
 	public String[][] selectFactory(String[][] spreadsheet, int indexheight, int indexLenght){
 		
 		switch (getFirstSymbol(spreadsheet[indexheight][indexLenght])) {

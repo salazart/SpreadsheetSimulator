@@ -1,7 +1,6 @@
 package com.spreadsheet.services;
 
-
-public class ProcessService {
+public class ProcessService{
 	private InputDataService inputDataService = new InputDataService();
 	private OutDataService outDataService = new OutDataService();
 	private DataFactory cellsDataFactory = new DataFactory();
@@ -11,10 +10,8 @@ public class ProcessService {
 		int heightData = inputDataService.getHeightData();
 		int lenghtData = inputDataService.getLenghtData();
 		
-		String[][] outData = cellsDataFactory.processFactory(inData, heightData, lenghtData);
+		String[][] outData = cellsDataFactory.processFactory(inData, 0, heightData, 0, lenghtData);
 		
 		outDataService.writeOutData(outData, heightData, lenghtData);
 	}
-	
-	
 }
